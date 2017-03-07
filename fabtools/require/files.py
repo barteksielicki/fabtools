@@ -191,6 +191,7 @@ def file(path=None, contents=None, source=None, url=None, md5=None,
     # Ensure correct mode
     if use_sudo and mode is None:
         mode = oct(0o666 & ~int(umask(use_sudo=True), base=8))
+        mode = mode.replace("0o", "") # remove octal number prefix in Python3
     if mode and _mode(path, use_sudo) != mode:
         func('chmod %(mode)s "%(path)s"' % locals())
 
