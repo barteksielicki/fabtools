@@ -5,7 +5,7 @@ MySQL users and databases
 This module provides tools for creating MySQL users and databases.
 
 """
-from __future__ import with_statement
+
 
 from pipes import quote
 

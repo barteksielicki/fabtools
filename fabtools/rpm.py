@@ -107,7 +107,7 @@ def install(packages, repos=None, yes=None, options=None):
         options = []
     elif isinstance(options, str):
         options = [options]
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
     if repos:
         for repo in repos:
@@ -159,7 +159,7 @@ def uninstall(packages, options=None):
         options = []
     elif isinstance(options, str):
         options = [options]
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
     options = " ".join(options)
     run_as_root('%(manager)s %(options)s remove %(packages)s' % locals())
@@ -204,4 +204,4 @@ def repolist(status='', media=None):
             repos = run_as_root("%(manager)s repolist %(status)s | sed '$d' | sed -n '/repo id/,$p'" % locals())
         else:
             repos = run_as_root("%(manager)s repolist %(status)s | sed '/Media\\|Debug/d' | sed '$d' | sed -n '/repo id/,$p'" % locals())
-        return map(lambda line: line.split(' ')[0], repos.splitlines()[1:])
+        return [line.split(' ')[0] for line in repos.splitlines()[1:]]

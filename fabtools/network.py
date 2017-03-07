@@ -17,7 +17,7 @@ def interfaces():
             res = run('/usr/sbin/dladm show-link')
         else:
             res = sudo('/sbin/ifconfig -s')
-    return map(lambda line: line.split(' ')[0], res.splitlines()[1:])
+    return [line.split(' ')[0] for line in res.splitlines()[1:]]
 
 
 def address(interface):

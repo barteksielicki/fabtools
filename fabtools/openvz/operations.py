@@ -105,7 +105,7 @@ def _vzctl(command, ctid_or_name, **kwargs):
 
 def _expand_args(**kwargs):
     args = []
-    for k, v in kwargs.items():
+    for k, v in list(kwargs.items()):
         if isinstance(v, bool):
             if v is True:
                 args.append('--%s' % k)
@@ -151,7 +151,7 @@ def list_ctids():
     """
     with settings(hide('running', 'stdout')):
         res = run_as_root('vzlist -a -1')
-    return map(int, res.splitlines())
+    return list(map(int, res.splitlines()))
 
 
 def get_available_ctid():

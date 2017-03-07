@@ -11,7 +11,7 @@ def test_list_partitions():
     from fabtools.disk import partitions
 
     partitions = partitions()
-    for pname, ptype in partitions.items():
+    for pname, ptype in list(partitions.items()):
         puts("%s is %s" % (pname, hex(ptype)))
 
 

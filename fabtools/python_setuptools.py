@@ -124,7 +124,7 @@ def install(packages, upgrade=False, use_sudo=False, python_cmd='python'):
     argv = []
     if upgrade:
         argv.append("-U")
-    if isinstance(packages, basestring):
+    if isinstance(packages, str):
         argv.append(packages)
     else:
         argv.extend(packages)

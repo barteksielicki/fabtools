@@ -135,7 +135,7 @@ def install(packages, upgrade=False, download_cache=None, allow_external=None,
 
     .. _pip: http://www.pip-installer.org/
     """
-    if isinstance(packages, basestring):
+    if isinstance(packages, str):
         packages = [packages]
 
     if allow_external in (None, False):

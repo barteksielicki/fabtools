@@ -8,11 +8,11 @@ This module provides high-level tools for managing `Bazaar`_ repositories.
 
 """
 
-from __future__ import with_statement
+
 
 import posixpath
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 from fabric.api import abort, env, puts, run
 from fabric.colors import cyan

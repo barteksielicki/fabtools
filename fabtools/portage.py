@@ -92,7 +92,7 @@ def install(packages, update=False, options=None):
     options = options or []
     options = " ".join(options)
 
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
 
     cmd = '%(manager)s %(options)s %(packages)s' % locals()
@@ -110,7 +110,7 @@ def uninstall(packages, options=None):
     options = options or []
     options = " ".join(options)
 
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
 
     cmd = '%(manager)s --unmerge %(options)s %(packages)s' % locals()

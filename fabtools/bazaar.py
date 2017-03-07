@@ -13,7 +13,7 @@ should normally not use them directly but rather use the high-level wrapper
 
 """
 
-from __future__ import with_statement
+
 
 from fabric.api import local
 from fabric.api import run

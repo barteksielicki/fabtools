@@ -39,7 +39,7 @@ def add_task(name, timespec, user, command, environment=None):
     lines = []
 
     # Write optional environment variables first
-    for key, value in environment.iteritems():
+    for key, value in environment.items():
         lines.append('%(key)s=%(value)s\n' % locals())
 
     # Write the main crontab line

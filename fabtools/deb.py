@@ -86,7 +86,7 @@ def install(packages, update=False, options=None, version=None):
         version = ''
     if version and not isinstance(packages, list):
         version = '=' + version
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
     options.append("--quiet")
     options.append("--assume-yes")
@@ -108,7 +108,7 @@ def uninstall(packages, purge=False, options=None):
     command = "purge" if purge else "remove"
     if options is None:
         options = []
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
     options.append("--assume-yes")
     options = " ".join(options)
@@ -134,7 +134,7 @@ def preseed_package(pkg_name, preseed):
         fabtools.deb.install('postfix')
 
     """
-    for q_name, _ in preseed.items():
+    for q_name, _ in list(preseed.items()):
         q_type, q_answer = _
         run_as_root('echo "%(pkg_name)s %(q_name)s %(q_type)s %(q_answer)s" | debconf-set-selections' % locals())
 

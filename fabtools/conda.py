@@ -203,7 +203,7 @@ def install(packages=None, yes=True, force=False, file=None, unknown=False,
     :param quiet: do not display progress bar
     """
 
-    if isinstance(packages, basestring):
+    if isinstance(packages, str):
         packages = [packages]
 
     options = []

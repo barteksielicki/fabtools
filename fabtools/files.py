@@ -162,22 +162,22 @@ def md5sum(filename, use_sudo=False):
     with settings(hide('running', 'stdout', 'stderr', 'warnings'),
                   warn_only=True):
         # Linux (LSB)
-        if exists(u'/usr/bin/md5sum'):
-            res = func(u'/usr/bin/md5sum %(filename)s' % locals())
+        if exists('/usr/bin/md5sum'):
+            res = func('/usr/bin/md5sum %(filename)s' % locals())
         # BSD / OS X
-        elif exists(u'/sbin/md5'):
-            res = func(u'/sbin/md5 -r %(filename)s' % locals())
+        elif exists('/sbin/md5'):
+            res = func('/sbin/md5 -r %(filename)s' % locals())
         # SmartOS Joyent build
-        elif exists(u'/opt/local/gnu/bin/md5sum'):
-            res = func(u'/opt/local/gnu/bin/md5sum %(filename)s' % locals())
+        elif exists('/opt/local/gnu/bin/md5sum'):
+            res = func('/opt/local/gnu/bin/md5sum %(filename)s' % locals())
         # SmartOS Joyent build
         # (the former doesn't exist, at least on joyent_20130222T000747Z)
-        elif exists(u'/opt/local/bin/md5sum'):
-            res = func(u'/opt/local/bin/md5sum %(filename)s' % locals())
+        elif exists('/opt/local/bin/md5sum'):
+            res = func('/opt/local/bin/md5sum %(filename)s' % locals())
         # Try to find ``md5sum`` or ``md5`` on ``$PATH`` or abort
         else:
-            md5sum = func(u'which md5sum')
-            md5 = func(u'which md5')
+            md5sum = func('which md5sum')
+            md5 = func('which md5')
             if exists(md5sum):
                 res = func('%(md5sum)s %(filename)s' % locals())
             elif exists(md5):
@@ -240,7 +240,7 @@ class watch(object):
     """
 
     def __init__(self, filenames, callback=None, use_sudo=False):
-        if isinstance(filenames, basestring):
+        if isinstance(filenames, str):
             self.filenames = [filenames]
         else:
             self.filenames = filenames

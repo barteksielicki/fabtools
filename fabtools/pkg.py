@@ -82,7 +82,7 @@ def install(packages, update=False, yes=None, options=None):
         options = []
     elif isinstance(options, str):
         options = [options]
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
     options.append("-y")
     options = " ".join(options)
@@ -108,7 +108,7 @@ def uninstall(packages, orphan=False, options=None):
         options = []
     elif isinstance(options, str):
         options = [options]
-    if not isinstance(packages, basestring):
+    if not isinstance(packages, str):
         packages = " ".join(packages)
     options.append("-y")
     options = " ".join(options)

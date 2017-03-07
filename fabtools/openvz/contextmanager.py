@@ -114,11 +114,11 @@ def guest(name_or_ctid):
             basename = os.path.basename(local_path)
             remote_path = posixpath.join(remote_path, basename)
         if output.running:
-            print("[%s] put: %s -> %s" % (
+            print(("[%s] put: %s -> %s" % (
                 env.host_string,
                 local_path if local_is_path else '<file obj>',
                 posixpath.join(pre, remote_path)
-            ))
+            )))
 
         # Have to bounce off FS if doing file-like objects
         fd, real_local_path = None, local_path
@@ -158,8 +158,8 @@ def guest(name_or_ctid):
         # Handle modes if necessary
         if (local_is_path and mirror_local_mode) or (mode is not None):
             lmode = os.stat(local_path).st_mode if mirror_local_mode else mode
-            lmode = lmode & 07777
-            rmode = rattrs.st_mode & 07777
+            lmode = lmode & 0o7777
+            rmode = rattrs.st_mode & 0o7777
             if lmode != rmode:
                 with hide('everything'):
                     sudo('chmod %o \"%s\"' % (lmode, remote_path))
@@ -208,9 +208,9 @@ def _run_host_command(command, shell=True, pty=True, combine_stderr=True,
         # Execute info line
         which = 'sudo'          # !! always use sudo
         if output.debug:
-            print("[%s] %s: %s" % (env.host_string, which, wrapped_command))
+            print(("[%s] %s: %s" % (env.host_string, which, wrapped_command)))
         elif output.running:
-            print("[%s] %s: %s" % (env.host_string, which, given_command))
+            print(("[%s] %s: %s" % (env.host_string, which, given_command)))
 
         # Actual execution, stdin/stdout/stderr handling, and termination
         result_stdout, result_stderr, status = _execute(
