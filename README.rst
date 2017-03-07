@@ -9,6 +9,16 @@ About
 
 Using ``fabtools.require`` allows you to use a more declarative style, similar to Chef or Puppet.
 
+Why fork?
+=========
+This fork has some minor changes that should allow this package to work
+with 3.6 version of python. Such patches however are made ad-hoc and thus
+it is certain that there will remain  some incompatibilities
+to be found and fixed.
+Such patches will be made on branch "compatibility/3.6".
+On "dev/custom" branch one can find custom minor changes that will probably
+not suit anyone else.
+
 Installing
 ==========
 
