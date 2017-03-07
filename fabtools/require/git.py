@@ -7,6 +7,7 @@ This module provides high-level tools for managing `Git`_ repositories.
 .. _Git: http://git-scm.com/
 
 """
+import os
 
 from fabric.api import run
 
@@ -50,7 +51,7 @@ def command():
 
 
 def working_copy(remote_url, path=None, branch="master", update=True,
-                 use_sudo=False, user=None):
+                 use_sudo=False, user=None, directly=False):
     """
     Require a working copy of the repository from the ``remote_url``.
 
@@ -98,16 +99,22 @@ def working_copy(remote_url, path=None, branch="master", update=True,
                  with the given user.  If ``use_sudo is False`` this parameter
                  has no effect.
     :type user: str
+
+    :param directly: If set to True clone repository directly into cwd
+    :type branch: bool
     """
 
     command()
 
     if path is None:
-        path = remote_url.split('/')[-1]
-        if path.endswith('.git'):
-            path = path[:-4]
+        if directly:
+            path = "."
+        else:
+            path = remote_url.split('/')[-1]
+            if path.endswith('.git'):
+                path = path[:-4]
 
-    if is_dir(path, use_sudo=use_sudo):
+    if is_dir(os.path.join(path, ".git"), use_sudo=use_sudo):
         # always fetch changesets from remote and checkout branch / tag
         git.fetch(path=path, use_sudo=use_sudo, user=user)
         git.checkout(path=path, branch=branch, use_sudo=use_sudo, user=user)
@@ -115,8 +122,9 @@ def working_copy(remote_url, path=None, branch="master", update=True,
             # only 'merge' if update is True
             git.pull(path=path, use_sudo=use_sudo, user=user)
 
-    elif not is_dir(path, use_sudo=use_sudo):
-        git.clone(remote_url, path=path, use_sudo=use_sudo, user=user)
+    elif not is_dir(os.path.join(path, ".git"), use_sudo=use_sudo):
+        git.clone(remote_url, path=path, use_sudo=use_sudo, user=user,
+                  directly=directly)
         git.checkout(path=path, branch=branch, use_sudo=use_sudo, user=user)
 
     else:
