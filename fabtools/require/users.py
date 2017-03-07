@@ -69,7 +69,6 @@ def sudoer(username, hosts="ALL", operators="ALL", passwd=False,
     spec = "%(username)s %(hosts)s=(%(operators)s) %(tags)s %(commands)s" %\
            locals()
     filename = '/etc/sudoers.d/fabtools-%s' % username.strip()
-    if is_file(filename):
-        run_as_root('chmod 0640 %(filename)s && rm -f %(filename)s' % locals())
-    run_as_root('echo "%(spec)s" >%(filename)s && chmod 0440 %(filename)s' %
+    if not is_file(filename):
+        run_as_root('echo "%(spec)s" >%(filename)s && chmod 0440 %(filename)s' %
                 locals(), shell=True)
