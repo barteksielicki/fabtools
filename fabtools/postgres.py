@@ -130,3 +130,30 @@ def create_schema(name, database, owner=None):
     else:
         _run_as_pg(
             '''psql %(database)s -c "CREATE SCHEMA %(name)s"''' % locals())
+
+
+def extension_exists(name, database):
+    """
+    Check if PostgreSQL extension exsists in given database
+
+    :param name: extension name
+    :param database: database name
+    :return: bool
+    """
+    with settings(hide('running', 'stdout', 'stderr', 'warnings'),
+                  warn_only=True):
+        res = _run_as_pg(
+            '''psql %(database)s -t -A -c "SELECT COUNT(*) FROM pg_extension WHERE extname = '%(name)s';"''' % locals()
+        )
+        return (res == "1")
+
+def create_extension(name, database):
+    """
+    Create extension within a database.
+
+    :param name: extension name
+    :param database: database name
+    """
+    _run_as_pg(
+        '''psql %(database)s -c "CREATE EXTENSION %(name)s"''' % locals()
+    )

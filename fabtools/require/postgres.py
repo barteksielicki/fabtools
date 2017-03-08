@@ -10,15 +10,13 @@ from fabtools.postgres import (
     create_user,
     database_exists,
     user_exists,
-)
-from fabtools.system import UnsupportedFamily, distrib_family
-
+    create_extension, extension_exists)
 from fabtools.require.service import started, restarted
 from fabtools.require.system import locale as require_locale
+from fabtools.system import UnsupportedFamily, distrib_family
 
 
 def _service_name(version=None):
-
     if is_file('/etc/init.d/postgresql'):
         return 'postgresql'
 
@@ -49,7 +47,6 @@ def server(version=None):
 
 
 def _server_debian(version):
-
     from fabtools.require.deb import package as require_deb_package
 
     if version:
@@ -60,6 +57,19 @@ def _server_debian(version):
     require_deb_package(pkg_name)
 
     started(_service_name(version))
+
+
+def postgis():
+    """
+    Require a PostGIS extension to be installed.
+    """
+    family = distrib_family()
+
+    if family == 'debian':
+        from fabtools.require.deb import package as require_deb_package
+        require_deb_package('postgis')
+    else:
+        raise UnsupportedFamily(supported=['debian'])
 
 
 def user(name, password, superuser=False, createdb=False,
@@ -84,6 +94,15 @@ def user(name, password, superuser=False, createdb=False,
     if not user_exists(name):
         create_user(name, password, superuser, createdb, createrole, inherit,
                     login, connection_limit, encrypted_password)
+
+
+def extension(name, database):
+    """
+    :param name: extension name
+    :param database: database name
+    """
+    if not extension_exists(name, database):
+        create_extension(name, database)
 
 
 def database(name, owner, template='template0', encoding='UTF8',
