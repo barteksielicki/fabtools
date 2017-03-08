@@ -18,6 +18,7 @@ import fabtools.oracle_jdk
 import fabtools.pkg
 import fabtools.portage
 import fabtools.postgres
+import fabtools.pyenv
 import fabtools.python
 import fabtools.python_setuptools
 import fabtools.rpm
