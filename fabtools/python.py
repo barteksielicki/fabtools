@@ -35,7 +35,7 @@ def is_pip_installed(version=None, python_cmd='python', pip_cmd='pip'):
     """
     with settings(
             hide('running', 'warnings', 'stderr', 'stdout'), warn_only=True):
-        res = run('%(python_cmd)s %(pip_cmd)s --version 2>/dev/null' % locals())
+        res = run('%(python_cmd)s -m %(pip_cmd)s --version 2>/dev/null' % locals())
         if res.failed:
             return False
         if version is None:
