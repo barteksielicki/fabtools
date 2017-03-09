@@ -20,6 +20,7 @@ import fabtools.require.pkg
 import fabtools.require.portage
 import fabtools.require.postfix
 import fabtools.require.postgres
+import fabtools.require.pyenv
 import fabtools.require.python
 import fabtools.require.redis
 import fabtools.require.rpm
