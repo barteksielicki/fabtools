@@ -19,7 +19,8 @@ def install():
     append("~/.bash_profile", [
         'export PATH="{0}/bin:$PATH"'.format(pyenv_root),
         'eval "$(pyenv init -)"',
-        'eval "$(pyenv virtualenv-init -)"'
+        'eval "$(pyenv virtualenv-init -)"',
+        'export PYENV_VIRTUALENV_DISABLE_PROMPT=1',
     ])
 
 
@@ -41,7 +42,7 @@ def install_python(version):
     Install given python version
     :param version: version of python
     """
-    run("pyenv install {0}".format(version))
+    run("env PYTHON_CFLAGS=-fPIC pyenv install {0}".format(version))
 
 
 def venv_exists(name):
@@ -68,6 +69,13 @@ def create_venv(name, version, force=True):
     """
     opts = "-f" if force else ""
     run("pyenv virtualenv {opts} {version} {name}".format(**locals()))
+
+
+def get_venv_path(name):
+    with settings(
+            hide('running', 'stdout', 'stderr', 'warnings'), warn_only=True
+    ), venv(name):
+        return run("echo $PYENV_VIRTUAL_ENV")
 
 
 @contextmanager
