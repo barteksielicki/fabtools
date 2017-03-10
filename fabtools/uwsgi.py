@@ -11,13 +11,15 @@ UWSGI_INSTALLATION_DIR = "/opt/uwsgi"
 
 UWSGI_PLUGINS_LOCATION = "/etc/uwsgi/plugins"
 
+UWSGI_SITES_LOCATION = "/etc/uwsgi/sites"
+
 UWSGI_SERVICE_TEMPLATE = """\
 [Unit]
 Description=uWSGI Emperor
 After=syslog.target
 
 [Service]
-ExecStart=/usr/local/bin/uwsgi --emperor /etc/uwsgi/sites --die-on-term
+ExecStart=/usr/local/bin/uwsgi --emperor {emperor_dir} --die-on-term
 RuntimeDirectory=uwsgi
 Restart=always
 KillSignal=SIGTERM
@@ -27,7 +29,7 @@ NotifyAccess=all
 
 [Install]
 WantedBy=multi-user.target
-"""
+""".format(emperor_dir=UWSGI_SITES_LOCATION)
 
 
 def is_installed():
