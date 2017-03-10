@@ -1,3 +1,5 @@
+import os
+
 from fabric.api import cd, env, sudo
 from fabtools import require, files
 from fabtools import uwsgi as _uwsgi
@@ -33,7 +35,7 @@ def _uwsgi_debian(as_service=True, use_pip=False):
             _uwsgi.UWSGI_SERVICE_TEMPLATE.format(
                 owner=env.user, group="www-data"
             ), use_sudo=True)
-        require.directory("/etc/uwsgi/sites", use_sudo=True)
+        require.directory(_uwsgi.UWSGI_SITES_LOCATION, use_sudo=True)
         require.service.started("uwsgi")
 
 
@@ -55,6 +57,16 @@ def python_plugin(path, name):
 
 
 def site(site_name, context, template_contents=None, template_source=None):
-    config_filename = "/etc/uwsgi/sites/{0}.ini".format(site_name)
+    config_filename = os.path.join(
+        _uwsgi.UWSGI_SITES_LOCATION, "{0}.ini".format(site_name)
+    )
     template_file(config_filename, template_contents, template_source,
                   context, use_sudo=True)
+
+
+def reload_site(site_name):
+    site_ini = os.path.join(
+        _uwsgi.UWSGI_SITES_LOCATION, "{0}.ini".format(site_name)
+    )
+    if files.exists(site_ini):
+        sudo("touch {0}".format(site_ini))
