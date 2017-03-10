@@ -29,6 +29,7 @@ import fabtools.supervisor
 import fabtools.system
 import fabtools.tomcat
 import fabtools.user
+import fabtools.uwsgi
 
 import fabtools.require
 icanhaz = require
