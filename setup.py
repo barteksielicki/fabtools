@@ -13,7 +13,7 @@ from setuptools.command.test import test as TestCommand
 
 def read(filename):
     path = os.path.join(os.path.dirname(__file__), filename)
-    return open(path).read()
+    return open(path, encoding="utf-8").read()
 
 
 class Tox(TestCommand):
