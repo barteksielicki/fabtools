@@ -12,6 +12,7 @@ import fabtools.mysql
 import fabtools.network
 import fabtools.nginx
 import fabtools.nodejs
+import fabtools.nvm
 import fabtools.openvz
 import fabtools.opkg
 import fabtools.oracle_jdk

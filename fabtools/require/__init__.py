@@ -13,6 +13,7 @@ import fabtools.require.mysql
 import fabtools.require.network
 import fabtools.require.nginx
 import fabtools.require.nodejs
+import fabtools.require.nvm
 import fabtools.require.openvz
 import fabtools.require.opkg
 import fabtools.require.oracle_jdk
