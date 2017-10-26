@@ -34,6 +34,6 @@ def use_version(version):
     Context manager to use given node version
     :param name: node version to use
     """
-    activate_venv_command = "nvm use {0}".format(name)
-    with prefix(activate_venv_command):
+    _command = f"nvm use {version}"
+    with prefix(_command):
         yield
